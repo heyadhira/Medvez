@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Database
+*.sqlite3
+
+# Media files
+media/
+
+# Static files (if you are collecting static files)
+staticfiles/
+static/
+
+# Log files
+*.log
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Python environment variables
+.env
+*.env
+
+# Test output
+coverage.xml
+*.cover
+*.py,cover
+nosetests.xml
+test_*.xml
+coverage_html_report/
