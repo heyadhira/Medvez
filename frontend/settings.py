@@ -1,4 +1,3 @@
-
 import os
 from pathlib import Path
 
@@ -12,13 +11,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-6%0#owkr)iy_u^yd%hhu1gj84%s!j*!qks%my@rupj^i60wyz6"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True  # Set this to False for production
 
 ALLOWED_HOSTS = [
     '127.0.0.1',          # Localhost
     'localhost',          # Local development
-    'medvez.onrender.com' # Your Render app domain
+    'medvez.onrender.com'  # Your Render app domain
 ]
+
+# CSRF Trusted Origins for Render domain
+CSRF_TRUSTED_ORIGINS = ['https://medvez.onrender.com']
 
 # Application definition
 
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # Added Whitenoise for static files
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -114,25 +117,26 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend', 'sumapp', 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-SESSION_COOKIE_AGE = 900  # 15 minutes
-# Expire session when browser is closed
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-import os
+# Whitenoise settings for serving static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Session timeout settings
+SESSION_COOKIE_AGE = 900  # 15 minutes
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Login redirect URL
 LOGIN_REDIRECT_URL = '/'
 
+# Logging settings
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -148,4 +152,6 @@ LOGGING = {
     },
 }
 
-
+# Security settings (for production)
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
